@@ -11,6 +11,7 @@ var Sysconfig = &sysconfig{}
 
 func init() {
 	dir, err := os.Getwd()
+	fmt.Println(dir)
 	b, err := ioutil.ReadFile(dir + "/config.json")
 	if err != nil {
 		fmt.Println(err)

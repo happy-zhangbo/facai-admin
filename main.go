@@ -4,6 +4,7 @@ import (
 	"flag"
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris/v12"
+	"github.com/yaboyou/facai-admin/config"
 	"github.com/yaboyou/facai-admin/web/router"
 )
 
@@ -11,6 +12,10 @@ func main() {
 	flag.Parse()
 	app := newApp()
 	router.InitRouter(app)
+	err := app.Run(iris.Addr(":"+config.Sysconfig.Port), iris.WithoutServerError(iris.ErrServerClosed))
+	if err != nil {
+		panic(err)
+	}
 }
 
 func newApp() *iris.Application {
