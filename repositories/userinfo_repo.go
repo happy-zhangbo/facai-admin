@@ -22,6 +22,7 @@ func (u userInfoRepo) GetUserList(m map[string]interface{}) (total int, userinfo
 
 	db.Table("userinfo").Count(&total)
 	err := db.Limit(cast.ToInt(m["size"])).Offset((cast.ToInt(m["page"]) - 1) * cast.ToInt(m["size"])).Find(&userinfo).Error
+	//err := db.Select("u_id").Find(&userinfo).Error
 	if err != nil {
 		panic("select Error")
 	}
