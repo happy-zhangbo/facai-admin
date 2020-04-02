@@ -13,5 +13,6 @@ func InitRouter(app *iris.Application) {
 	app.Use(middleware.GetJWT().Serve) // jwt
 	mvc.New(app.Party(bathUrl + "/user")).Handle(controllers.NewUserInfoController())
 	mvc.New(app.Party(bathUrl + "/order")).Handle(controllers.NewOrderController())
+	mvc.New(app.Party(bathUrl + "/product")).Handle(controllers.NewProductController())
 
 }

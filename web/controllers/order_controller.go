@@ -46,3 +46,17 @@ func (o *OrderController) PostList() (result datamodel.Result) {
 
 	return o.Service.GetOrderList(m)
 }
+
+func (o *OrderController) PostDetail() (result datamodel.Result) {
+	var m map[string]interface{}
+	err := o.Ctx.ReadJSON(&m)
+	if err != nil {
+		log.Println("ReadJSON Error:", err)
+	}
+	if m["oid"] == "" || m["oid"] == nil {
+		result.Code = -1
+		result.Msg = "参数缺失 oid"
+		return
+	}
+	return o.Service.GetOrderDetail(m)
+}

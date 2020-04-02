@@ -30,32 +30,35 @@ type Order struct {
 	OConfirmtime    time.Time //确认收货时间
 	OLink           string    //收货人
 	OLinkTel        string    //联系电话
-	OrderDetails    []OrderDetail
+
+	OrderDetail []OrderDetail `gorm:"ForeignKey:OdOid;AssociationForeignKey:OID"`
 }
 
 // OrderDetail [...]
 type OrderDetail struct {
-	OdID    int     `gorm:"primary_key;column:od_id;type:int(10);not null"` // 主键
-	OdOid   int     `gorm:"column:od_oid;type:int(10)"`                     // 订单id
-	OdPsid  int     `gorm:"column:od_psid;type:int(10)"`                    // 规格id
-	OdCount int     `gorm:"column:od_count;type:int(10)"`                   // 数量
-	OdTotal float64 `gorm:"column:od_total;type:decimal(10,2)"`             // 总价
+	OdID         int            `gorm:"primary_key;column:od_id;type:int(10);not null"` // 主键
+	OdOid        int            `gorm:"column:od_oid;type:int(10)"`                     // 订单id
+	OdPsid       int            `gorm:"column:od_psid;type:int(10)"`                    // 规格id
+	OdCount      int            `gorm:"column:od_count;type:int(10)"`                   // 数量
+	OdTotal      float64        `gorm:"column:od_total;type:decimal(10,2)"`             // 总价
+	ProductSpecs []ProductSpecs `gorm:"ForeignKey:OdPsid;AssociationForeignKey:SID"`
 }
 
 // Product [...]
 type Product struct {
-	PID         int       `gorm:"primary_key;column:p_id;type:int(10);not null"` // 主键ID
-	PTitle      string    `gorm:"column:p_title;type:varchar(155)"`              // 名称
-	PState      int       `gorm:"column:p_state;type:int(1)"`                    // 状态
-	PTypeid     int       `gorm:"column:p_typeid;type:int(2)"`                   // 分类id
-	PCreatetime time.Time `gorm:"column:p_createtime;type:datetime"`             // 创建时间
-	PDetail     string    `gorm:"column:p_detail;type:varchar(3000)"`            // 介绍
-	PBrief      string    `gorm:"column:p_brief;type:varchar(355)"`              // 简介
-	PBrand      string    `gorm:"column:p_brand;type:varchar(20)"`               // 品牌
-	PSource     string    `gorm:"column:p_source;type:varchar(20)"`              // 货源
-	POrigin     string    `gorm:"column:p_origin;type:varchar(20)"`              // 产地
-	PCover      string    `gorm:"column:p_cover;type:varchar(355)"`              // 封面图片
-	PImgArray   string    `gorm:"column:p_imgArray;type:varchar(655)"`           // 轮播图片
+	PID          int       `gorm:"primary_key;column:p_id;type:int(10);not null"` // 主键ID
+	PTitle       string    `gorm:"column:p_title;type:varchar(155)"`              // 名称
+	PState       int       `gorm:"column:p_state;type:int(1)"`                    // 状态
+	PTypeid      int       `gorm:"column:p_typeid;type:int(2)"`                   // 分类id
+	PCreatetime  time.Time `gorm:"column:p_createtime;type:datetime"`             // 创建时间
+	PDetail      string    `gorm:"column:p_detail;type:varchar(3000)"`            // 介绍
+	PBrief       string    `gorm:"column:p_brief;type:varchar(355)"`              // 简介
+	PBrand       string    `gorm:"column:p_brand;type:varchar(20)"`               // 品牌
+	PSource      string    `gorm:"column:p_source;type:varchar(20)"`              // 货源
+	POrigin      string    `gorm:"column:p_origin;type:varchar(20)"`              // 产地
+	PCover       string    `gorm:"column:p_cover;type:varchar(355)"`              // 封面图片
+	PImgArray    string    `gorm:"column:p_imgArray;type:varchar(655)"`           // 轮播图片
+	ProductSpecs []ProductSpecs
 }
 
 // ProductSpecs [...]
@@ -67,6 +70,7 @@ type ProductSpecs struct {
 	SBrief     string  `gorm:"column:s_brief;type:varchar(355)"`              // 简介
 	SStock     int     `gorm:"column:s_stock;type:int(10)"`                   // 库存
 	SProductid int     `gorm:"column:s_productid;type:int(10)"`               // 所属产品id
+	Product    Product
 }
 
 // ProductType [...]
