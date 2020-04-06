@@ -34,11 +34,11 @@ func init() {
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 
 		str := strings.Split(defaultTableName, "_")
-		fmt.Println(str)
+		//fmt.Println(str)
 		if len(str) <= 1 {
 			return defaultTableName
 		}
-		fmt.Println(str[0] + Capitalize(str[1]))
+		//fmt.Println(str[0] + Capitalize(str[1]))
 		return str[0] + Capitalize(str[1])
 	}
 }

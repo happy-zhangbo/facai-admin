@@ -36,7 +36,7 @@ func (o orderRepo) GetOrderDetail(m map[string]interface{}) (orderDetail []datam
 func (o orderRepo) GetOrderList(m map[string]interface{}) (totle int, orderList []datamodel.Order) {
 	var db = datasource.GetDB()
 	db.Table("order").Count(&totle)
-	err := db.Limit(cast.ToInt(m["size"])).Offset((cast.ToInt(m["page"]) - 1) * cast.ToInt(m["size"])).Find(&orderList).Error
+	err := db.Limit(cast.ToInt(m["size"])).Offset((cast.ToInt(m["page"]) - 1) * cast.ToInt(m["size"])).Order("o_createtime desc").Find(&orderList).Error
 	if err != nil {
 		panic("select Error")
 	}

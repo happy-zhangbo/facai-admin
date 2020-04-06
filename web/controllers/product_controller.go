@@ -18,6 +18,93 @@ func NewProductController() *ProductController {
 	return &ProductController{Service: services.NewProductService()}
 }
 
+func (p *ProductController) PostAlltypelist() (result datamodel.Result) {
+	var m map[string]interface{}
+	err := p.Ctx.ReadJSON(&m)
+	if err != nil {
+		log.Println("ReadJSON Error:", err)
+	}
+
+	return p.Service.GetProductTypeListByAll(m)
+}
+
+func (p *ProductController) PostTypelist() (result datamodel.Result) {
+	var m map[string]interface{}
+	err := p.Ctx.ReadJSON(&m)
+	if err != nil {
+		log.Println("ReadJSON Error:", err)
+	}
+	if m["page"] == "" || m["page"] == nil {
+		result.Code = -1
+		result.Msg = "参数缺失 page"
+		return
+	}
+	if cast.ToUint(m["page"]) == 0 {
+		result.Code = -1
+		result.Msg = "参数错误 page"
+		return
+	}
+	if m["size"] == "" || m["size"] == nil {
+		result.Code = -1
+		result.Msg = "参数缺失 size"
+		return
+	}
+	if cast.ToUint(m["size"]) == 0 {
+		result.Code = -1
+		result.Msg = "参数错误 size"
+		return
+	}
+	return p.Service.GetProductTypeList(m)
+}
+
+func (p *ProductController) PostTypesave() (result datamodel.Result) {
+	var productType datamodel.ProductType
+	if err := p.Ctx.ReadJSON(&productType); err != nil {
+		log.Println(err)
+		result.Msg = "数据错误"
+		return
+	}
+
+	return p.Service.SaveProductType(productType)
+}
+func (p *ProductController) PostTypeget() (result datamodel.Result) {
+	var m map[string]interface{}
+	err := p.Ctx.ReadJSON(&m)
+	if err != nil {
+		log.Println("ReadJSON Error:", err)
+	}
+	if m["id"] == "" || m["id"] == nil {
+		result.Code = -1
+		result.Msg = "参数缺失 id"
+		return
+	}
+	if cast.ToUint(m["id"]) == 0 {
+		result.Code = -1
+		result.Msg = "参数错误 id"
+		return
+	}
+	return p.Service.GetProductType(cast.ToUint(m["id"]))
+}
+
+func (p *ProductController) PostTypedel() (result datamodel.Result) {
+	var m map[string]interface{}
+	err := p.Ctx.ReadJSON(&m)
+	if err != nil {
+		log.Println("ReadJSON Error:", err)
+	}
+	if m["id"] == "" || m["id"] == nil {
+		result.Code = -1
+		result.Msg = "参数缺失 id"
+		return
+	}
+	if cast.ToUint(m["id"]) == 0 {
+		result.Code = -1
+		result.Msg = "参数错误 id"
+		return
+	}
+	return p.Service.DeleteProductType(cast.ToUint(m["id"]))
+}
+
 func (p *ProductController) PostList() (result datamodel.Result) {
 	var m map[string]interface{}
 	err := p.Ctx.ReadJSON(&m)

@@ -5,6 +5,7 @@ import (
 	"github.com/spf13/cast"
 	"github.com/yaboyou/facai-admin/datamodel"
 	"github.com/yaboyou/facai-admin/services"
+	"github.com/yaboyou/facai-admin/utils"
 	"log"
 )
 
@@ -44,4 +45,14 @@ func (u *UserInfoController) PostList() (result datamodel.Result) {
 		return
 	}
 	return u.Service.GetUserList(m)
+}
+
+func (u *UserInfoController) GetToken() (result datamodel.Result) {
+	maps := make(map[string]interface{}, 2)
+	maps["Token"] = utils.CreateUptoken()
+	maps["Url"] = "http://image.lonelysky.com.cn"
+	result.Data = maps
+	result.Code = 0
+	result.Msg = "SUCCESS"
+	return result
 }

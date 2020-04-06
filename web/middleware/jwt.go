@@ -28,7 +28,7 @@ func GetJWT() *jwtmiddleware.Middleware {
 		ErrorHandler: func(ctx iris.Context, s error) {
 			fmt.Println(ctx)
 			fmt.Println("错误:", s)
-			result := datamodel.Result{Code: -1, Msg: "认证失败，请重新登录认证"}
+			result := datamodel.Result{Code: 50008, Msg: "认证失败，请重新登录认证"}
 			i, err := ctx.JSON(result)
 			if err != nil {
 				log.Println(i, err)

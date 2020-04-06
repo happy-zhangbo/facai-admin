@@ -15,21 +15,21 @@ type Cart struct {
 
 // Order [...]
 type Order struct {
-	OID             int       `gorm:"primary_key"` // 主键
-	OSerialNum      string    //交易号
-	OPayMethod      int       //支付方式(0在线)
-	OCreatetime     time.Time //创建时间
-	OState          int       //交易状态(-1订单取消、-2支付失败、0待支付、1、备货中、2、已发货、3订单已完成)
-	OType           int       //交易类型(1微信)
-	OTransactionNum string    //第三方交易号
-	OTotalAmount    float64   `gorm:"column:o_totalAmount;type:decimal(10,2)"` //总金额
-	OUserid         int       //所属用户id
-	ORemarks        string    //订单备注
-	OAddress        string    //地址
-	ODeliverytime   time.Time //送货时间
-	OConfirmtime    time.Time //确认收货时间
-	OLink           string    //收货人
-	OLinkTel        string    //联系电话
+	OID             int       `gorm:"primary_key"`                              // 主键
+	OSerialNum      string    `gorm:"column:o_serialNum;type:varchar(25)"`      //交易号
+	OPayMethod      int       `gorm:"column:o_payMethod;type:int(1)"`           //支付方式(0在线)
+	OCreatetime     time.Time `gorm:"column:o_createtime;type:datetime"`        //创建时间
+	OState          int       `gorm:"column:o_state;type:int(1)"`               //交易状态(-1订单取消、-2支付失败、0待支付、1、备货中、2、已发货、3订单已完成)
+	OType           int       `gorm:"column:o_type;type:int(1)"`                //交易类型(1微信)
+	OTransactionNum string    `gorm:"column:o_transactionNum;type:varchar(25)"` //第三方交易号
+	OTotalAmount    float64   `gorm:"column:o_totalAmount;type:decimal(10,2)"`  //总金额
+	OUserid         int       `gorm:"column:o_userid;type:int(10)"`             //所属用户id
+	ORemarks        string    `gorm:"column:o_remarks;type:varchar(355)"`       //订单备注
+	OAddress        string    `gorm:"column:o_address;type:varchar(355)"`       //地址
+	ODeliverytime   time.Time `gorm:"column:o_deliverytime;type:datetime"`      //送货时间
+	OConfirmtime    time.Time `gorm:"column:o_confirmtime;type:datetime"`       //确认收货时间
+	OLink           string    `gorm:"column:o_link;type:varchar(155)"`          //收货人
+	OLinkTel        string    `gorm:"column:o_linkTel;type:varchar(20)"`        //联系电话
 
 	OrderDetail []OrderDetail `gorm:"ForeignKey:OdOid;AssociationForeignKey:OID"`
 }
